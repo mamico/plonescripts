@@ -11,7 +11,7 @@ For updates and more such scripts, see https://github.com/zestsoftware/plonescri
 """
 
 from datetime import datetime
-
+import six
 import transaction
 from Acquisition import aq_base
 from BTrees.IOBTree import IOBTree
@@ -104,7 +104,7 @@ def new_tree(old_tree, modfactor=9):
         synthetic = range(
             maxkey + 1, maxkey + 2 + (maxsize - get_bucket_sizes(new._firstbucket)[-1])
         )
-    elif isinstance(maxkey, basestring):
+    elif isinstance(maxkey, six.string_types):
         synthetic = [
             maxkey + str(x)
             for x in range((maxsize - get_bucket_sizes(new._firstbucket)[-1]) + 1)
@@ -165,7 +165,7 @@ def optimize_tree(parent, k, v, attr=True):
             ]
             for x in sublist
         ]
-        median = bucketsizes[before / 2]
+        median = bucketsizes[before // 2]
 
         # Filling the tree in a two-step process. The first time we set up the tree,
         # values are inserted sequentially, resulting in 50% fill rate.
